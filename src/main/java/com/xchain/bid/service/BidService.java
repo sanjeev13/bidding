@@ -11,7 +11,7 @@ import com.xchain.bid.dao.CatalogDao;
 import com.xchain.bid.dao.UserDao;
 import com.xchain.bid.model.Bid;
 import com.xchain.bid.model.Catalog;
-import com.xchain.bid.model.User;
+import com.xchain.bid.model.BidUser;
 import com.xchain.bid.model.form.BidForm;
 
 @Service
@@ -26,7 +26,7 @@ public class BidService {
 
 	public void save(BidForm bidForm) {
 		
-		User bidder = userDao.findByName(bidForm.getBidder());
+		BidUser bidder = userDao.findByName(bidForm.getBidder());
 		Catalog catalog = catalogDao.findByTitle(bidForm.getCatalog()); 
 		
 		Bid bid = new Bid(bidForm.getBidTime(),bidForm.getAmount(),bidder,catalog);
@@ -43,4 +43,8 @@ public class BidService {
 		return bids;
 	}
 
+	public void save(Bid bid) {
+		bidDao.save(bid);
+	}
+	
 }

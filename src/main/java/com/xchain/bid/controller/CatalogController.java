@@ -2,6 +2,9 @@ package com.xchain.bid.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -17,16 +20,20 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xchain.bid.model.form.CatalogForm;
 import com.xchain.bid.service.CatalogService;
 import com.xchain.bid.service.UserService;
+import com.xchain.bid.validator.CatalogValidator;
 
 @Controller
 @RequestMapping(value = "/catalog")
 public class CatalogController {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(CatalogController.class);
+	
 	@Autowired
 	private CatalogService catalogService;
 	@Autowired
 	private UserService userService;
-		
+	@Autowired
+	private CatalogValidator catalogValidator;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 	    CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true);
@@ -67,8 +74,12 @@ public class CatalogController {
 	@RequestMapping(value = "/{id}/bids", method = RequestMethod.GET)
 	public ModelAndView showBidBoard(@PathVariable Long id,
 			Model model) {
-
-		model.addAttribute("bids",catalogService.getBids(id));
+		if(!catalogValidator.isValid(id)){
+			LOGGER.error("Invalid catalog id:"+id+" in get bid request");
+			model.addAttribute("error", "Invalid catalog id:"+id+" in get bid request");
+		}else {
+			model.addAttribute("bids",catalogService.getBids(id));
+		}
 		return new ModelAndView("show-all-bids");
 	}
 

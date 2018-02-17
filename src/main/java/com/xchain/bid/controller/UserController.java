@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import com.xchain.bid.model.User;
+import com.xchain.bid.model.BidUser;
 import com.xchain.bid.model.UserType;
 import com.xchain.bid.service.UserService;
 
@@ -29,7 +29,7 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView submit(@ModelAttribute("user") User user, 
+	public ModelAndView submit(@ModelAttribute("user") BidUser user, 
 			BindingResult result,Model model) {
 		
 		userService.save(user);
@@ -60,6 +60,6 @@ public class UserController {
 			typeList.add(type.toString());
 		}
 		model.addAttribute("typeList",typeList);	
-		model.addAttribute("user",new User());
+		model.addAttribute("user",new BidUser());
 	}
 }

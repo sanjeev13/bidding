@@ -24,7 +24,7 @@ public class Catalog extends BaseEntity{
 	
 	@ManyToOne
     @JoinColumn(name = "creator_id")
-	User creator;
+	BidUser creator;
 	
 	@OneToMany(targetEntity=Item.class, mappedBy="catalog", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     Set<Item> items;
@@ -32,7 +32,7 @@ public class Catalog extends BaseEntity{
 	@OneToMany(targetEntity=Bid.class, mappedBy="catalog", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     Set<Bid> bids;
 
-	public Catalog(String title, Date bidStart, Date bidEnd, User creator) {
+	public Catalog(String title, Date bidStart, Date bidEnd, BidUser creator) {
 		super();
 		this.title = title;
 		this.bidStart = bidStart;
@@ -68,11 +68,11 @@ public class Catalog extends BaseEntity{
 		this.bidEnd = bidEnd;
 	}
 
-	public User getCreator() {
+	public BidUser getCreator() {
 		return creator;
 	}
 
-	public void setCreator(User creator) {
+	public void setCreator(BidUser creator) {
 		this.creator = creator;
 	}
 

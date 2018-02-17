@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.xchain.bid.dao.BidDao;
 import com.xchain.bid.dao.UserDao;
 import com.xchain.bid.model.Bid;
-import com.xchain.bid.model.User;
+import com.xchain.bid.model.BidUser;
 
 @Service
 public class UserService {
@@ -18,22 +18,22 @@ public class UserService {
 	@Autowired
 	BidDao bidDao;
 	
-	public List<User> getAllUsers() {
-		List<User> users = new ArrayList<User>();
-		for(User u : userDao.findAll()) {
+	public List<BidUser> getAllUsers() {
+		List<BidUser> users = new ArrayList<BidUser>();
+		for(BidUser u : userDao.findAll()) {
 			users.add(u);
 		}
 		return users;
 	}
 
-	public void save(User user) {
+	public void save(BidUser user) {
 		user.setActive(Boolean.TRUE);
 		userDao.save(user);
 	}
 
 	public List<String> getUsersDisplayList() {
 		List<String> userNames = new ArrayList<>();	
-		for(User u : getAllUsers()) {
+		for(BidUser u : getAllUsers()) {
 			userNames.add(u.getName());
 		}
 		return userNames;
@@ -41,7 +41,7 @@ public class UserService {
 
 	public List<Bid> getBids(Long userId) {
 		List<Bid> bids = new ArrayList<>();
-		User user = userDao.findOne(userId);
+		BidUser user = userDao.findOne(userId);
 		if(user != null) {
 			bids = bidDao.findByBidder(user);
 		} 

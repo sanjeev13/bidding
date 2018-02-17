@@ -17,7 +17,7 @@ public class Bid extends BaseEntity{
 	
 	@ManyToOne
     @JoinColumn(name = "bidder_id")
-	User bidder;
+	BidUser bidder;
 	
 	@Column(name = "amount", nullable = false)
 	Float amount;
@@ -26,7 +26,7 @@ public class Bid extends BaseEntity{
 	Date bidTime;
 
 
-	public Bid(Date bidTime, Float amount, User bidder, Catalog catalog) {
+	public Bid(Date bidTime, Float amount, BidUser bidder, Catalog catalog) {
 		super();
 		this.bidTime = bidTime;
 		this.amount = amount;
@@ -54,11 +54,11 @@ public class Bid extends BaseEntity{
 		this.amount = amount;
 	}
 
-	public User getBidder() {
+	public BidUser getBidder() {
 		return bidder;
 	}
 
-	public void setBidder(User bidder) {
+	public void setBidder(BidUser bidder) {
 		this.bidder = bidder;
 	}
 

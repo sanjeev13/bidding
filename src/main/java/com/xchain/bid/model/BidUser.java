@@ -8,7 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity(name="user")
-public class User extends BaseEntity{
+public class BidUser extends BaseEntity{
 
 	@Column(name = "name", nullable = false)
 	String name;
@@ -21,13 +21,13 @@ public class User extends BaseEntity{
 	@OneToMany(targetEntity=Bid.class, mappedBy="bidder", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     Set<Bid> bids;
 	
-	public User(String name, String type) {
+	public BidUser(String name, String type) {
 		super();
 		this.name = name;
 		this.type = type;
 	}
 
-	public User() {
+	public BidUser() {
 	}
 
 	public String getName() {

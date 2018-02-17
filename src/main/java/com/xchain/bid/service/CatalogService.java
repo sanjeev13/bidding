@@ -14,7 +14,7 @@ import com.xchain.bid.dao.UserDao;
 import com.xchain.bid.model.Bid;
 import com.xchain.bid.model.Catalog;
 import com.xchain.bid.model.Item;
-import com.xchain.bid.model.User;
+import com.xchain.bid.model.BidUser;
 import com.xchain.bid.model.form.CatalogForm;
 
 @Service
@@ -31,7 +31,7 @@ public class CatalogService {
 
 	public void save(CatalogForm catalogForm) {
 
-		User creator = userDao.findByName(catalogForm.getCreator());
+		BidUser creator = userDao.findByName(catalogForm.getCreator());
 		Catalog catalog = new Catalog(catalogForm.getTitle(), catalogForm.getBidStart(),
 				catalogForm.getBidEnd(), creator);
 		catalogDao.save(catalog);
@@ -71,6 +71,24 @@ public class CatalogService {
 		} 
 		Collections.sort(bids, (b1, b2) -> Float.compare(b2.getAmount(), b1.getAmount()));
 		return bids;
+	}
+
+	public Catalog getCatalog(Long id) {
+		Catalog catalog = null;
+		catalog	= catalogDao.findOne(id);
+		return catalog;
+	}
+
+	public void save(Catalog catalog) {
+		catalogDao.save(catalog);
+	}
+
+	public Catalog getCatalog(String title) {
+		return catalogDao.findByTitle(title);
+	}
+
+	public void delete(long id) {
+		catalogDao.delete(id);
 	}
 
 }

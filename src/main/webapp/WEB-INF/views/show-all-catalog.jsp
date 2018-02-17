@@ -18,7 +18,7 @@
 			<td><label>Items</label></td>
 		</tr>
 		<c:forEach items="${catalogs}" var="catalog">
-			<tr onclick="window.location='/users/${catalog.id}/bids';">
+			<tr onclick="window.location='/catalog/${catalog.id}/bids';">
 				<td><c:out value="${catalog.title}" /></td>
 				<td><c:out value="${catalog.bidStart}" /></td>
 				<td><c:out value="${catalog.bidEnd}" /></td>
